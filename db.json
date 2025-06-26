@@ -10,19 +10,19 @@
       "id": "2",
       "title": "1984",
       "author": "George Orwell",
-      "status": "unread"
+      "status": "read"
     },
     {
       "id": "8b18",
       "title": "bar",
       "author": "rihanna",
-      "status": "read"
+      "status": "unread"
     },
     {
       "id": "916c",
       "title": "Harun",
       "author": "bar",
-      "status": "read"
+      "status": "unread"
     },
     {
       "id": "3f19",
@@ -35,12 +35,6 @@
       "title": "Atomic Boom",
       "author": "Yuva",
       "status": "read"
-    },
-    {
-      "id": "cebc",
-      "title": "somali culture",
-      "author": "luul",
-      "status": "unread"
     },
     {
       "id": "ed70",

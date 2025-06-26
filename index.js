@@ -26,7 +26,12 @@ document.addEventListener("DOMContentLoaded", () => {
       li.innerHTML = `
         <span><strong>${book.title}</strong> by ${book.author}</span>
         <span>Status: ${book.status}</span>
-        <button class="toggle-status" data-id="${book.id}">Mark as ${book.status === "read" ? "Unread" : "Read"}</button>
+        <div>
+          <button class="toggle-status" data-id="${book.id}">
+            Mark as ${book.status === "read" ? "Unread" : "Read"}
+          </button>
+          <button class="delete-book" data-id="${book.id}">Remove</button>
+        </div>
       `;
       bookList.appendChild(li);
     });
@@ -57,10 +62,12 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   });
 
-  // Toggle read/unread status
+  // Handle toggle and delete
   bookList.addEventListener("click", e => {
+    const id = e.target.dataset.id;
+
+    // Toggle read/unread
     if (e.target.classList.contains("toggle-status")) {
-      const id = e.target.dataset.id;
       const book = books.find(b => b.id == id);
       const updatedStatus = book.status === "read" ? "unread" : "read";
 
@@ -72,6 +79,17 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(res => res.json())
         .then(updatedBook => {
           books = books.map(b => b.id == id ? updatedBook : b);
+          renderBooks(books);
+        });
+    }
+
+    // Remove book
+    if (e.target.classList.contains("delete-book")) {
+      fetch(`${API_URL}/${id}`, {
+        method: "DELETE"
+      })
+        .then(() => {
+          books = books.filter(b => b.id != id);
           renderBooks(books);
         });
     }
