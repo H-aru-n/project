@@ -125,8 +125,9 @@ app.delete('/books/:id', (req, res) => {
   }
 });
 
-// Catch-all route to serve index.html for SPA support (after all API routes)
-app.get('*', (req, res) => {
+
+// Serve index.html only for non-API, non-static requests (SPA support)
+app.get(/^\/(?!books|db\.json|index\.js|style\.css|favicon\.ico).*/, (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
