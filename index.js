@@ -10,10 +10,19 @@ document.addEventListener("DOMContentLoaded", () => {
   // Fetch books from server
   function fetchBooks() {
     fetch(API_URL)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
       .then(data => {
         books = data;
         renderBooks(books);
+      })
+      .catch(error => {
+        console.error('Error fetching books:', error);
+        alert('Failed to load books. Please make sure the server is running.');
       });
   }
 
@@ -54,11 +63,20 @@ document.addEventListener("DOMContentLoaded", () => {
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(newBook)
     })
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
       .then(book => {
         books.push(book);
         renderBooks(books);
         form.reset();
+      })
+      .catch(error => {
+        console.error('Error adding book:', error);
+        alert('Failed to add book. Please try again.');
       });
   });
 
@@ -76,10 +94,19 @@ document.addEventListener("DOMContentLoaded", () => {
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({ status: updatedStatus })
       })
-        .then(res => res.json())
+        .then(res => {
+          if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+          }
+          return res.json();
+        })
         .then(updatedBook => {
           books = books.map(b => b.id == id ? updatedBook : b);
           renderBooks(books);
+        })
+        .catch(error => {
+          console.error('Error updating book status:', error);
+          alert('Failed to update book status. Please try again.');
         });
     }
 
@@ -88,9 +115,16 @@ document.addEventListener("DOMContentLoaded", () => {
       fetch(`${API_URL}/${id}`, {
         method: "DELETE"
       })
-        .then(() => {
+        .then(res => {
+          if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+          }
           books = books.filter(b => b.id != id);
           renderBooks(books);
+        })
+        .catch(error => {
+          console.error('Error deleting book:', error);
+          alert('Failed to delete book. Please try again.');
         });
     }
   });
