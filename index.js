@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("book-form");
   const filter = document.getElementById("filter");
 
-  const API_URL = "http://localhost:3000/books";
+  const API_URL = "https://project-1-5awi.onrender.com/books";
 
   let books = [];
 
