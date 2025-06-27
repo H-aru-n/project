@@ -9,10 +9,8 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.static('.'));
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+// Serve static files from the root directory
+app.use(express.static(path.join(__dirname, '.')));
 
 
 // Path to the database file
@@ -127,12 +125,12 @@ app.delete('/books/:id', (req, res) => {
   }
 });
 
-// Serve the frontend
-app.get('/', (req, res) => {
+// Catch-all route to serve index.html for SPA support (after all API routes)
+app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// Start the server
+// Start the server (only once)
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });

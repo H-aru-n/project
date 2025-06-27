@@ -3,7 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("book-form");
   const filter = document.getElementById("filter");
 
-  const API_URL = "https://project-1-5awi.onrender.com/books";
+  // Use a relative API URL so it works on both local and Render deployments
+  const API_URL = "/books";
 
   let books = [];
 
